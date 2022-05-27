@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/postFragment"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:title="포스트"
+        tools:ignore="AlwaysShowAction"/>
+    <item
+        android:id="@+id/clothesFragment"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:title="옷장"
+        tools:ignore="AlwaysShowAction"/>
+    <item
+        android:id="@+id/myPageFragment"
+        app:showAsAction="always"
+        android:enabled="true"
+        android:title="마이페이지"
+        tools:ignore="AlwaysShowAction"/>
+</menu>
