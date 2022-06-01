@@ -6,7 +6,6 @@ import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
@@ -19,6 +18,7 @@ import androidx.annotation.Nullable
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.example.ottzzang.databinding.ActivityAddClothesBinding
+import com.example.ottzzang.databinding.ActivityAddPostBinding
 import com.example.ottzzang.model.*
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
@@ -30,54 +30,43 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
 import java.text.SimpleDateFormat
 
-
-class AddClothesActivity : AppCompatActivity() {
-    lateinit var binding:ActivityAddClothesBinding
+class AddPostActivity : AppCompatActivity() {
+    lateinit var binding: ActivityAddPostBinding
     var uri: Uri? =null
     lateinit var mediaPath:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAddClothesBinding.inflate(layoutInflater)
+        binding = ActivityAddPostBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         settingPermission()
+
         var retrofit = Retrofit.Builder()
             .baseUrl("http://10.0.2.2:9000")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-        var clothesService: ClothesService = retrofit.create(ClothesService::class.java)
-        Log.d("INFO123", "RESULT_OK")
+        var postService: PostService = retrofit.create(PostService::class.java)
         binding.cameraBtn.setOnClickListener{
             captureCamera()
         }
         binding.albumBtn.setOnClickListener{
 
         }
+
         binding.addCompleteBtn.setOnClickListener{
             val userIdx = RequestBody.create(MediaType.parse("text/plain"),UserIndex.userIdx.toString())
-            Log.d("season",binding.season.text.toString())
-            val season = RequestBody.create(MediaType.parse("text/plain"),binding.season.text.toString())
-            val bigCategory = RequestBody.create(MediaType.parse("text/plain"),binding.bigCategory.text.toString())
-            val smallCategory = RequestBody.create(MediaType.parse("text/plain"),binding.smallCategory.text.toString())
-            val color = RequestBody.create(MediaType.parse("text/plain"),binding.color.text.toString())
+            val title = RequestBody.create(MediaType.parse("text/plain"),binding.title.text.toString())
             val file = File(mediaPath)
             val fileBody = RequestBody.create(MediaType.parse("image/jpeg"),file)
             val filePart = MultipartBody.Part.createFormData("imgFile",uri.toString(),fileBody)
-            clothesService.requestAddClothes(filePart,userIdx,season,bigCategory,smallCategory,color).enqueue(object: Callback<PostClothesRes> {
-                override fun onFailure(call: Call<PostClothesRes>, t: Throwable) {
-                    t.message?.let { it1 -> Log.e("LOGIN", it1) }
-                    var dialog = AlertDialog.Builder(this@AddClothesActivity)
-                    dialog.setTitle("에러")
-                    dialog.setMessage("호출실패했습니다.")
-                    dialog.show()
-                }
-
-                override fun onResponse(
-                    call: Call<PostClothesRes>,
-                    response: Response<PostClothesRes>
-                ) {
+            postService.requestAddPosts(filePart,userIdx,title).enqueue(object: Callback<PostPostRes> {
+                override fun onResponse(call: Call<PostPostRes>, response: Response<PostPostRes>) {
                     var clothesRes = response.body()
                     Log.d("LOGIN","" +clothesRes)
                     if(clothesRes?.isSuccess==true)
@@ -85,29 +74,37 @@ class AddClothesActivity : AppCompatActivity() {
                         finish()
                     }
                     else{
-                        var dialog = AlertDialog.Builder(this@AddClothesActivity)
+                        var dialog = AlertDialog.Builder(this@AddPostActivity)
                         Log.d("뭐가 문젤까?","" +clothesRes?.message)
                         dialog.setTitle("" + clothesRes?.code)
                         dialog.setMessage("옷추가 실패 ")
                         dialog.show()
                     }
                 }
+
+                override fun onFailure(call: Call<PostPostRes>, t: Throwable) {
+                    var dialog = AlertDialog.Builder(this@AddPostActivity)
+                    dialog.setTitle("에러")
+                    dialog.setMessage("호출실패했습니다.")
+                    dialog.show()
+                }
             })
         }
     }
+
 
     fun settingPermission(){//허가를 받기 위한 함수
         var permis = object  : PermissionListener {
             //            어떠한 형식을 상속받는 익명 클래스의 객체를 생성하기 위해 다음과 같이 작성
             override fun onPermissionGranted() {
-                Toast.makeText(this@AddClothesActivity,"권한 허용", Toast.LENGTH_SHORT)
+                Toast.makeText(this@AddPostActivity,"권한 허용", Toast.LENGTH_SHORT)
                     .show()
             }
 
             override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
-                Toast.makeText(this@AddClothesActivity, "권한 거부", Toast.LENGTH_SHORT)
+                Toast.makeText(this@AddPostActivity, "권한 거부", Toast.LENGTH_SHORT)
                     .show()
-                ActivityCompat.finishAffinity(this@AddClothesActivity) // 권한 거부시 앱 종료
+                ActivityCompat.finishAffinity(this@AddPostActivity) // 권한 거부시 앱 종료
             }
         }
 

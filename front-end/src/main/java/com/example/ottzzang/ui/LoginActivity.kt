@@ -10,11 +10,13 @@ import com.example.ottzzang.databinding.ActivityLoginBinding
 import com.example.ottzzang.model.LoginReq
 import com.example.ottzzang.model.LoginRes
 import com.example.ottzzang.model.LoginService
+import com.example.ottzzang.model.UserIndex
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.log
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +59,7 @@ class LoginActivity : AppCompatActivity() {
                     Log.d("LOGIN","" +login)
                     if(login?.isSuccess==true)
                     {
+                        UserIndex.userIdx = login.result.userIdx
                         startActivity(homeIntent)
                     }
                     else{
