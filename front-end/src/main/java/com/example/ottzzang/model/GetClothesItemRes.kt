@@ -6,8 +6,14 @@ import com.google.gson.annotations.SerializedName
 data class GetClothesItemRes(
     @SerializedName("uri")
     val uri: String,
-    @SerializedName("clothesIdx")
-    val clothesIdx:Int,
+    @SerializedName("season")
+    val season:Int,
+    @SerializedName("bigCategory")
+    val bigCategory:Int,
+    @SerializedName("smallCategory")
+    val smallCategory:Int,
+    @SerializedName("color")
+    val color:String,
     @SerializedName("file")
     val file: String
 )

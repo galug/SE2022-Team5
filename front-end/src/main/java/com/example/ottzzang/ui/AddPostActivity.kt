@@ -56,7 +56,7 @@ class AddPostActivity : AppCompatActivity() {
             captureCamera()
         }
         binding.albumBtn.setOnClickListener{
-
+            startGalleryApp()
         }
 
         binding.addCompleteBtn.setOnClickListener{
@@ -121,6 +121,13 @@ class AddPostActivity : AppCompatActivity() {
         var intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent,101)
     }
+    private fun startGalleryApp() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, 102)
+    }
+
     fun saveFile(fileName: String, mimeType: String, bitmap: Bitmap): Uri?
     {
         var CV = ContentValues()
@@ -180,6 +187,22 @@ class AddPostActivity : AppCompatActivity() {
                         }
                         binding.iv.setImageURI(uri)
                     }
+                }
+                102 ->{
+//                    val selectedImg = data?.data
+//                    val img = data?.extras?.get("data") as Bitmap
+                    val uri = data?.data as Uri
+//                        val byteArrayOutputStream = ByteArrayOutputStream()
+//                        img?.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream)
+//                        val byteArray = byteArrayOutputStream.toByteArray()
+//                    uri = saveFile(RandomFileName(), "image/jpeg", img)
+                    mediaPath =
+                        createCopyAndReturnRealPath(context = this, uri!!)!!
+                    val file = File(uri.toString())
+                    if(!file.exists()){
+                        Log.d("failllll","file not found"+"uri"+uri.toString())
+                    }
+                    binding.iv.setImageURI(uri)
                 }
             }
         }

@@ -1,10 +1,13 @@
 package com.example.ottzzang.adapter
 
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.Toast
+import com.example.ottzzang.ui.ClothesFragment
+import com.example.ottzzang.ui.ClothesInfoActivity
 
 class GridViewAdapter: BaseAdapter() {
     var clothesList: ArrayList<ClothesItem> = ArrayList()

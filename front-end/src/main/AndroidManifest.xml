@@ -19,7 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidLab2"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".ui.ClothesInfoActivity"
+            android:exported="false" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

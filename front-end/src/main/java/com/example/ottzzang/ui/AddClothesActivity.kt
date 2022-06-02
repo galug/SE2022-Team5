@@ -53,7 +53,7 @@ class AddClothesActivity : AppCompatActivity() {
             captureCamera()
         }
         binding.albumBtn.setOnClickListener{
-
+            startGalleryApp()
         }
         binding.addCompleteBtn.setOnClickListener{
             val userIdx = RequestBody.create(MediaType.parse("text/plain"),UserIndex.userIdx.toString())
@@ -120,6 +120,13 @@ class AddClothesActivity : AppCompatActivity() {
                 android.Manifest.permission.CAMERA)
             .check()
     }
+
+    private fun startGalleryApp() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, 102)
+    }
     fun captureCamera(){ //카메라로 앱을 넘어가는 인텐트
         var intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
         startActivityForResult(intent,101)
@@ -183,6 +190,22 @@ class AddClothesActivity : AppCompatActivity() {
                         }
                         binding.iv.setImageURI(uri)
                     }
+                }
+                102 ->{
+//                    val selectedImg = data?.data
+//                    val img = data?.extras?.get("data") as Bitmap
+                    val uri = data?.data as Uri
+//                        val byteArrayOutputStream = ByteArrayOutputStream()
+//                        img?.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream)
+//                        val byteArray = byteArrayOutputStream.toByteArray()
+//                    uri = saveFile(RandomFileName(), "image/jpeg", img)
+                    mediaPath =
+                        createCopyAndReturnRealPath(context = this, uri!!)!!
+                    val file = File(uri.toString())
+                    if(!file.exists()){
+                        Log.d("failllll","file not found"+"uri"+uri.toString())
+                    }
+                    binding.iv.setImageURI(uri)
                 }
             }
         }

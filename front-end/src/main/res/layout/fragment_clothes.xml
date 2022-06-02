@@ -5,6 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.ClothesFragment">
 
+    <Button
+        android:id="@+id/allBtn"
+        android:text="전체"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/spBtn"
+        android:text="전체"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
     <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"

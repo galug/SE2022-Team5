@@ -43,6 +43,7 @@ class ClothesFragment : Fragment() {
             .build()
         var clothesService: ClothesService = retrofit.create(ClothesService::class.java)
         val getClothesListReq = GetClothesListReq(UserIndex.userIdx,10,3,3)
+
         clothesService.requestGetClothes(getClothesListReq).enqueue(object: Callback<GetClothesListRes>{
             override fun onResponse(
                 call: Call<GetClothesListRes>,
@@ -58,9 +59,18 @@ class ClothesFragment : Fragment() {
                         val bitmap =BitmapFactory.decodeByteArray(encodeByte,0,
                         encodeByte.size)
                         Log.d("byte",""+encodeByte)
-                        adapter.addItem(ClothesItem(bitmap,item.clothesIdx))
+                        adapter.addItem(ClothesItem(bitmap,item.season,item.bigCategory,item.smallCategory,item.color))
                     }
                     gridView.adapter = adapter
+                    gridView.setOnItemClickListener(AdapterView.OnItemClickListener
+                    { parent, view, position, id ->
+                        val intent = Intent(activity,ClothesInfoActivity::class.java)
+                        intent.putExtra("bc",clothesList[position].bigCategory)
+                        intent.putExtra("sc",clothesList[position].smallCategory)
+                        intent.putExtra("color",clothesList[position].color)
+                        intent.putExtra("img",clothesList[position].file)
+                        startActivity(intent)
+                    })
                 }else{
                     Log.d("fail","응답 x ")
                 }
@@ -70,6 +80,7 @@ class ClothesFragment : Fragment() {
                 Log.d("실패","실패")
             }
         })
+
 
         binding.addClothesBtn.setOnClickListener{
             val intent = Intent(getActivity(), AddClothesActivity::class.java)
