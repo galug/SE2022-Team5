@@ -1,20 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.MyPageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="3" />
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:src="@drawable/main_logo2" />
+
+        <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:text="김김김" />
+
+        <ImageView
+            android:id="@+id/upperLine"
+            android:layout_width="380dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/upperline_dot" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+
+            <GridView
+                android:id="@+id/gridView"
+                android:layout_width="300dp"
+                android:layout_height="250dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="3"
+                android:horizontalSpacing="10dp"
+                android:numColumns="1"
+                android:verticalSpacing="10dp" />
+
+            <GridView
+                android:id="@+id/deletegridView"
+                android:layout_width="50dp"
+                android:layout_height="250dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="10dp"
+                android:layout_weight="1"
+                android:horizontalSpacing="10dp"
+                android:numColumns="1"
+                android:verticalSpacing="10dp" />
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/withdrawalBtn"
+            android:layout_width="90dp"
+            android:layout_height="50dp"
+            android:layout_gravity="left"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#00FFFFFF"
+            android:scaleType="fitXY"
+            android:src="@drawable/withrawal_button" />
+    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_post_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_gravity="bottom|right"
-        android:layout_margin="16dp" />
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/add_button"
+        android:scaleType="fitXY"
+        android:src="@drawable/add_button"
+        app:backgroundTint="#00FFFFFF"
+        app:maxImageSize="50dp" />
 </FrameLayout>

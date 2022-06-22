@@ -52,6 +52,7 @@ class AddPostActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         var postService: PostService = retrofit.create(PostService::class.java)
+
         binding.cameraBtn.setOnClickListener{
             captureCamera()
         }

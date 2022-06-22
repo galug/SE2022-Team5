@@ -14,5 +14,7 @@ data class GetPostItemRes(
     @SerializedName("uri")
     val uri:String,
     @SerializedName("file")
-    val file:String
+    val file:String,
+    @SerializedName("postIdx")
+    val postIdx:Int
 )

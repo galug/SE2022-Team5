@@ -1,16 +1,22 @@
 package com.example.ottzzang.adapter
 
-import android.content.Intent
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
-import android.widget.Toast
-import com.example.ottzzang.ui.ClothesFragment
-import com.example.ottzzang.ui.ClothesInfoActivity
+import com.example.ottzzang.R
 
 class GridViewAdapter: BaseAdapter() {
     var clothesList: ArrayList<ClothesItem> = ArrayList()
+
+    fun addItem(item:ClothesItem){
+        clothesList.add(item)
+    }
+    fun clearAdapter(){
+        clothesList.clear()
+    }
 
     override fun getCount(): Int {
         return clothesList.size
@@ -28,22 +34,14 @@ class GridViewAdapter: BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val context = parent?.context
         val clothesItem = clothesList.get(position)
-        val imageView:ImageView
+        val inflater:LayoutInflater
 
-        if(convertView==null){
-            imageView = ImageView(context)
-            imageView.run {
-                layoutParams = ViewGroup.LayoutParams(400,400)
-                scaleType = ImageView.ScaleType.FIT_CENTER
-                setPadding(10,10,10,10)
-            }
-        }else{
-            imageView = convertView as ImageView
-        }
-        imageView.setImageBitmap(clothesItem.img)
-        return imageView
-    }
-    fun addItem(item:ClothesItem){
-        clothesList.add(item)
+        inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val clothesView : View = inflater.inflate(R.layout.clothes_item,parent,false)
+
+        val clothesImage = clothesView.findViewById<ImageView>(R.id.clothesImage)
+        clothesImage.setImageBitmap(clothesItem.img)
+
+        return clothesView
     }
 }

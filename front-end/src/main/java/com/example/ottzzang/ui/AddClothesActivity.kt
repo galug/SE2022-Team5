@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AlertDialog
@@ -35,9 +36,13 @@ import java.text.SimpleDateFormat
 
 
 class AddClothesActivity : AppCompatActivity() {
+
     lateinit var binding:ActivityAddClothesBinding
     var uri: Uri? =null
     lateinit var mediaPath:String
+    var season:Int =0
+    var bigCategory:Int=0
+    var smallCategory: Int=0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddClothesBinding.inflate(layoutInflater)
@@ -55,12 +60,80 @@ class AddClothesActivity : AppCompatActivity() {
         binding.albumBtn.setOnClickListener{
             startGalleryApp()
         }
-        binding.addCompleteBtn.setOnClickListener{
+        binding.springBtn.setOnClickListener{
+            season=0
+        }
+        binding.summerBtn.setOnClickListener{
+            season=1
+        }
+        binding.fallBtn.setOnClickListener{
+            season=2
+        }
+        binding.winterBtn.setOnClickListener{
+            season=3
+        }
+        binding.top.setOnClickListener{
+            bigCategory = 0
+            binding.topSmallLayout.visibility = View.VISIBLE
+            binding.pantSmallLayout.visibility = View.GONE
+            binding.outerSmallLayout.visibility = View.GONE
+            binding.shortSleeve.setOnClickListener{
+                smallCategory = 0
+            }
+            binding.longSleeve.setOnClickListener{
+                smallCategory = 1
+            }
+            binding.shirts.setOnClickListener{
+                smallCategory = 2
+            }
+            binding.topEtc.setOnClickListener{
+                smallCategory = 3
+            }
+        }
+        binding.pants.setOnClickListener{
+            bigCategory = 1
+            binding.topSmallLayout.visibility = View.GONE
+            binding.pantSmallLayout.visibility = View.VISIBLE
+            binding.outerSmallLayout.visibility = View.GONE
+            binding.skirt.setOnClickListener{
+                smallCategory = 0
+            }
+            binding.shortpants.setOnClickListener{
+                smallCategory = 1
+            }
+            binding.longpants.setOnClickListener{
+                smallCategory = 2
+            }
+            binding.pantsEtc.setOnClickListener{
+                smallCategory = 3
+            }
+        }
+        binding.outer.setOnClickListener{
+            bigCategory = 2
+            binding.topSmallLayout.visibility = View.GONE
+            binding.pantSmallLayout.visibility = View.GONE
+            binding.outerSmallLayout.visibility = View.VISIBLE
+            binding.jacket.setOnClickListener{
+                smallCategory = 0
+            }
+            binding.padding.setOnClickListener{
+                smallCategory = 1
+            }
+            binding.outerEtc.setOnClickListener{
+                smallCategory = 2
+            }
+        }
+        binding.etc.setOnClickListener{
+            bigCategory = 3
+            binding.topSmallLayout.visibility = View.GONE
+            binding.pantSmallLayout.visibility = View.GONE
+            binding.outerSmallLayout.visibility = View.GONE
+        }
+        binding.saveBtn.setOnClickListener{
             val userIdx = RequestBody.create(MediaType.parse("text/plain"),UserIndex.userIdx.toString())
-            Log.d("season",binding.season.text.toString())
-            val season = RequestBody.create(MediaType.parse("text/plain"),binding.season.text.toString())
-            val bigCategory = RequestBody.create(MediaType.parse("text/plain"),binding.bigCategory.text.toString())
-            val smallCategory = RequestBody.create(MediaType.parse("text/plain"),binding.smallCategory.text.toString())
+            val season = RequestBody.create(MediaType.parse("text/plain"),season.toString())
+            val bigCategory = RequestBody.create(MediaType.parse("text/plain"),bigCategory.toString())
+            val smallCategory = RequestBody.create(MediaType.parse("text/plain"),smallCategory.toString())
             val color = RequestBody.create(MediaType.parse("text/plain"),binding.color.text.toString())
             val file = File(mediaPath)
             val fileBody = RequestBody.create(MediaType.parse("image/jpeg"),file)

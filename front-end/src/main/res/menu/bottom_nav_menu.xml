@@ -5,20 +5,23 @@
 
     <item
         android:id="@+id/postFragment"
-        app:showAsAction="always"
         android:enabled="true"
-        android:title="포스트"
-        tools:ignore="AlwaysShowAction"/>
+        android:icon="@drawable/board_logo"
+        android:title="게시판"
+        app:showAsAction="ifRoom"
+        tools:ignore="AlwaysShowAction" />
     <item
         android:id="@+id/clothesFragment"
-        app:showAsAction="always"
         android:enabled="true"
+        android:icon="@drawable/clothes_logo"
         android:title="옷장"
-        tools:ignore="AlwaysShowAction"/>
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
     <item
         android:id="@+id/myPageFragment"
-        app:showAsAction="always"
         android:enabled="true"
+        android:icon="@drawable/mypage_logo"
         android:title="마이페이지"
-        tools:ignore="AlwaysShowAction"/>
+        app:showAsAction="always"
+        tools:ignore="AlwaysShowAction" />
 </menu>

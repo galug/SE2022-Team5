@@ -2,10 +2,7 @@ package com.example.ottzzang.model
 
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import retrofit2.http.Body
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.http.*
 
 interface PostService {
     @Multipart
@@ -20,4 +17,14 @@ interface PostService {
     fun requestGetPosts(
         @Body getCPostsReq:GetPostListReq
     ): retrofit2.Call<GetPostListRes>
+
+    @POST("posts/like")
+    fun requestLikePosts(
+        @Body postPostLikeReq:PostPostLikReq
+    ):retrofit2.Call<PostPostLikeRes>
+
+    @PATCH("posts/{postIdx}/status")
+    fun requestDeletePosts(
+        @Path("postIdx") postIdx:Int
+    ):retrofit2.Call<DeletePostRes>
 }

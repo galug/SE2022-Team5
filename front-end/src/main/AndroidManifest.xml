@@ -20,6 +20,12 @@
         android:theme="@style/Theme.AndroidLab2"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.CorrectionClothesActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.PostInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.ClothesInfoActivity"
             android:exported="false" />
 

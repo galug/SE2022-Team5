@@ -25,4 +25,9 @@ interface ClothesService {
     fun requestGetClothes(
         @Body getClothesListReq:GetClothesListReq
     ): retrofit2.Call<GetClothesListRes>
+
+    @PATCH("clothes/{clothesIdx}/status")
+    fun requestDeleteClothes(
+        @Path("clothesIdx") clothesIdx:Int
+    ):retrofit2.Call<DeleteClothesRes>
 }
